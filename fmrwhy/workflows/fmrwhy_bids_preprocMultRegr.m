@@ -100,7 +100,7 @@ function confounds_tsv = fmrwhy_bids_preprocMultRegr(bids_dir, sub, task, option
         temp_txt_fn = fullfile(d, [f '.txt']);
         col_names = {'trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z'};
         MP = realign_measures.MP;
-        data_table = struct(chr(col_names(1), MP(:,1), chr(col_names(2), MP(:,2), chr(col_names(3), MP(:,3), chr(col_names(4), MP(:,4), chr(col_names(5), MP(:,5), chr(col_names(6), MP(:,6)) % Octave adapted
+        data_table = struct(char(col_names(1)), MP(:,1), char(col_names(2)), MP(:,2), char(col_names(3)), MP(:,3), char(col_names(4)), MP(:,4), char(col_names(5)), MP(:,5), char(col_names(6)), MP(:,6)); % Octave adapted
         %data_table = array2table(MP, 'VariableNames', col_names);
         tdfwrite(temp_txt_fn,data_table); % Octave adapted
         %writetable(data_table, temp_txt_fn, 'Delimiter', '\t');
