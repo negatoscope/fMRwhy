@@ -134,10 +134,10 @@ function confounds_tsv = fmrwhy_bids_preprocMultRegr(bids_dir, sub, task, option
                 FD_outliers_regr02 = FD_measures.FD_outliers_regr02;
                 FD_outliers_regr05 = FD_measures.FD_outliers_regr05;
                 FD_outliers_regr = [FD_outliers_regr02 FD_outliers_regr05];
-                %col_names_fd = {'framewise_displacement', 'framewise_displacement_censor02', 'framewise_displacement_censor05'};
+                col_names_fd = {'framewise_displacement', 'framewise_displacement_censor02', 'framewise_displacement_censor05'};
             else
                 FD_outliers_regr = FD_measures.FD_outliers_regr;
-                %col_names_fd = {'framewise_displacement', 'framewise_displacement_censor'};
+                col_names_fd = {'framewise_displacement', 'framewise_displacement_censor'};
             end
             if columns(FD_outliers_regr) == 3
                 data_table = struct('framewise_displacement', FD, 'framewise_displacement_censor02', FD_outliers_regr(:,1), 'framewise_displacement_censor05', FD_outliers_regr(:,2));
