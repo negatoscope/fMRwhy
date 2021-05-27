@@ -100,17 +100,19 @@ function confounds_tsv = fmrwhy_bids_preprocMultRegr(bids_dir, sub, task, option
         temp_txt_fn = fullfile(d, [f '.txt']);
         col_names = {'trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z'};
         MP = realign_measures.MP;
-        data_table = array2table(MP, 'VariableNames', col_names);
-        writetable(data_table, temp_txt_fn, 'Delimiter', '\t');
+        data_table = struct(chr(col_names(1), MP(:,1), chr(col_names(2), MP(:,2), chr(col_names(3), MP(:,3), chr(col_names(4), MP(:,4), chr(col_names(5), MP(:,5), chr(col_names(6), MP(:,6)) % Octave adapted
+        %data_table = array2table(MP, 'VariableNames', col_names);
+        tdfwrite(temp_txt_fn,data_table); % Octave adapted
+        %writetable(data_table, temp_txt_fn, 'Delimiter', '\t');
         [status, msg, msgID] = movefile(temp_txt_fn, options.motion_fn);
         disp('Complete!');
         disp('---');
     else
         disp(['3D realignment parameters already estimated: ' options.motion_fn]);
         disp('---');
-        motion_struct = dlmread(options.motion_fn);
-        motion_struct(1,:) = [];
-        MP = motion_struct;
+        motion_struct = dlmread(options.motion_fn); % Octave adapted
+        motion_struct(1,:) = []; % Octave adapted
+        MP = motion_struct; % Octave adapted
         %MP = struct2array(tdfread(options.motion_fn));
     end
 
@@ -136,16 +138,16 @@ function confounds_tsv = fmrwhy_bids_preprocMultRegr(bids_dir, sub, task, option
                 FD_outliers_regr = [FD_outliers_regr02 FD_outliers_regr05];
                 col_names_fd = {'framewise_displacement', 'framewise_displacement_censor02', 'framewise_displacement_censor05'};
             else
-                FD_outliers_regr = FD_measures.FD_outliers_regr;
-                col_names_fd = {'framewise_displacement', 'framewise_displacement_censor'};
+                FD_outliers_regr = FD_measures.FD_outliers_regr; % Octave adapted
+                col_names_fd = {'framewise_displacement', 'framewise_displacement_censor'}; % Octave adapted
             end
             if columns(FD_outliers_regr) == 3
-                data_table = struct('framewise_displacement', FD, 'framewise_displacement_censor02', FD_outliers_regr(:,1), 'framewise_displacement_censor05', FD_outliers_regr(:,2));
+                data_table = struct('framewise_displacement', FD, 'framewise_displacement_censor02', FD_outliers_regr(:,1), 'framewise_displacement_censor05', FD_outliers_regr(:,2)); % Octave adapted
             else
-                data_table = struct('framewise_displacement', FD, 'framewise_displacement_censor', FD_outliers_regr);
+                data_table = struct('framewise_displacement', FD, 'framewise_displacement_censor', FD_outliers_regr); % Octave adapted
             end
             %data_table = array2table([FD FD_outliers_regr], 'VariableNames', col_names_fd);
-            tdfwrite(temp_txt_fn,data_table);
+            tdfwrite(temp_txt_fn,data_table); % Octave adapted
             %writetable(data_table, temp_txt_fn, 'Delimiter', '\t');
             [status, msg, msgID] = movefile(temp_txt_fn, options.framewise_displacement_fn);
             disp('Complete!');
@@ -153,14 +155,14 @@ function confounds_tsv = fmrwhy_bids_preprocMultRegr(bids_dir, sub, task, option
         else
             disp(['FD measures already calculated: ' options.framewise_displacement_fn]);
             disp('---');
-            FD_struct = dlmread(options.framewise_displacement_fn);
-            FD_measures = FD_struct;
-            FD_measures(1,:) = [];
+            FD_struct = dlmread(options.framewise_displacement_fn); % Octave adapted
+            FD_measures = FD_struct; % Octave adapted
+            FD_measures(1,:) = []; % Octave adapted
             %FD_measures = struct2array(FD_struct);
             %FD = FD_measures(:, 1);
             FD = FD_measures(:, 1);
             FD_outliers_regr = FD_measures(:, 2:end);
-            col_names_fd = (FD_struct(1,:))';
+            col_names_fd = (FD_struct(1,:))'; % Octave adapted
         end
     end
 
