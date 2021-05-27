@@ -93,9 +93,9 @@ function fmrwhy_bids_preprocFunc(bids_dir, sub, task, options, varargin)
         realign_measures = fmrwhy_batch_realignEst(options.functional_fn, options.template_fn);
         temp_txt_fn = fullfile(d, [f '.txt']);
         col_names = {'trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z'};
-        data = load(realign_measures.mp_fn);
-        data_table = struct('trans_x', data(:,1), 'trans_y', data(:,2), 'trans_z', data(:,3), 'rot_x', data(:,4), 'rot_y', data(:,5), 'rot_z', data(:,6));
-        tdfwrite(temp_txt_fn,data_table);
+        data = load(realign_measures.mp_fn); % Octave adapted
+        data_table = struct('trans_x', data(:,1), 'trans_y', data(:,2), 'trans_z', data(:,3), 'rot_x', data(:,4), 'rot_y', data(:,5), 'rot_z', data(:,6)); % Octave adapted
+        tdfwrite(temp_txt_fn,data_table); % Octave adapted
         [status, msg, msgID] = movefile(temp_txt_fn, options.motion_fn);
         disp('Complete!');
         disp('---');
@@ -142,9 +142,9 @@ function fmrwhy_bids_preprocFunc(bids_dir, sub, task, options, varargin)
     % -------
     % STEP 3: 3D volume realignment (tsnr and other stat measures use slice time corrected and realigned data)
     % -------
-    motion_struct = dlmread(options.motion_fn);
-    motion_struct(1,:) = [];
-    motion_params = motion_struct;
+    motion_struct = dlmread(options.motion_fn); % Octave adapted
+    motion_struct(1,:) = []; % Octave adapted
+    motion_params = motion_struct; % Octave adapted
     if is_multiecho
         for e = 1:numel(N_echoes)
             % Update workflow params with subject functional derivative filenames
